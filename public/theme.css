@@ -1,0 +1,40 @@
+/* logo */
+.logo {
+    display: inline-block;
+    height: 40px;
+}
+.company-name {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* print-body：可在列印時使用（inline style 會把它絕對定位） */
+.print-body {
+    padding: 8px;
+}
+
+/* header / footer 在列印時會被 inline 的 @media print 固定定位 */
+@media screen {
+    .print-header {
+        height: auto;
+    }
+    .print-footer {
+        height: auto;
+    }
+}
+
+/* 其他主題化小元件 */
+.kv {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.kv .label {
+    width: 110px;
+    font-size: 12px;
+    color: #555;
+}
+.kv .value {
+    font-size: 12px;
+    color: #111;
+}

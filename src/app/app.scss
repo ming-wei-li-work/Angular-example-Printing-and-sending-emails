@@ -1,0 +1,94 @@
+.demo-page {
+    min-height: 100vh;
+    background: #f8fafc;
+}
+
+.demo-container {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+}
+
+.demo-header {
+    margin-bottom: 2rem;
+}
+
+.demo-badge {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #0284c7;
+    margin: 0;
+}
+
+.demo-header h1 {
+    margin: 0.5rem 0 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.demo-lead {
+    margin: 0.75rem 0 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #475569;
+}
+
+.demo-card {
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    padding: 1.5rem;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+}
+
+.demo-card h2 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.summary-grid {
+    display: grid;
+    gap: 0.75rem;
+    margin: 1rem 0 0;
+    font-size: 0.875rem;
+    grid-template-columns: 1fr;
+
+    @media (min-width: 640px) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    dt {
+        color: #64748b;
+        margin: 0;
+    }
+
+    dd {
+        margin: 0;
+        font-weight: 500;
+    }
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.demo-hint {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #fde68a;
+    background: #fffbeb;
+    font-size: 0.875rem;
+    color: #78350f;
+
+    ul {
+        margin: 0.5rem 0 0;
+        padding-left: 1.25rem;
+    }
+}

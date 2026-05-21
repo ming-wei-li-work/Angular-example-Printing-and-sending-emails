@@ -1,0 +1,94 @@
+/* 基本排版與字型 */
+html,
+body {
+    margin: 0;
+    background: #f0f0f0;
+    font-family: Arial, 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    color: #111;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10mm 0;
+    box-sizing: border-box;
+}
+
+/* A4 容器（預覽寬度，列印時會被 inline 的 @media print 覆寫成 210mm） */
+.print-page {
+    width: 190mm;
+    background: white;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: visible;
+    padding: 20mm 15mm 25mm;
+    font-size: 12px;
+    margin-bottom: 10mm;
+    min-height: auto;
+    box-sizing: border-box;
+}
+
+/* header / footer（預覽樣式） */
+.print-header,
+.print-footer {
+    position: sticky;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    padding: 8px 16px;
+    font-size: 12px;
+    z-index: 10;
+}
+.print-header {
+    top: 0;
+    border-bottom: 1px solid #ccc;
+}
+.print-footer {
+    bottom: 0;
+    border-top: 1px solid #ccc;
+}
+
+/* 內容區 */
+.print-content {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+/* items table */
+.items {
+    width: 100%;
+    border-collapse: collapse;
+}
+.items th,
+.items td {
+    border-bottom: 1px solid #ddd;
+    padding: 6px;
+    font-size: 12px;
+}
+
+/* 元件風格一致性 */
+.card,
+.shadcn-card,
+.MuiCard-root {
+    box-shadow: none !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 4px !important;
+    background: #fff !important;
+}
+
+.grid {
+    display: grid !important;
+}
+
+/* 預覽專用：隱藏在預覽中不需顯示的 UI */
+.no-print {
+    display: inline-block;
+}
+
+/* optional: small helpers */
+.signature-box {
+    display: block;
+    height: 50px;
+    border-bottom: 1px dashed #ddd;
+    margin-top: 12px;
+}

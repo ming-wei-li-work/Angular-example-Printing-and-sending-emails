@@ -1,0 +1,51 @@
+<main class="demo-page">
+    <div class="demo-container">
+        <header class="demo-header">
+            <p class="demo-badge">Angular 21 範例</p>
+            <h1>列印與寄信元件範例</h1>
+            <p class="demo-lead">
+                此專案展示詢價單的列印與寄信元件，所有資料均為虛構 mock。列印會開啟新視窗預覽；寄信為
+                mock API，不會真正寄出郵件。
+            </p>
+        </header>
+
+        <section class="demo-card">
+            <h2>詢價單摘要</h2>
+            <dl class="summary-grid">
+                <div>
+                    <dt>詢價單號</dt>
+                    <dd>{{ mockOrderId }}</dd>
+                </div>
+                <div>
+                    <dt>廠商</dt>
+                    <dd>{{ supplierName }}</dd>
+                </div>
+                <div>
+                    <dt>詢價項目</dt>
+                    <dd>{{ itemCount }} 筆</dd>
+                </div>
+                <div>
+                    <dt>操作者</dt>
+                    <dd>{{ operatorName }}</dd>
+                </div>
+            </dl>
+
+            <div class="actions">
+                <lib-print-button [data]="printData" />
+                <lib-mail-button
+                    [data]="mailData"
+                    [context]="mockDemoContext"
+                    defaultTo="supplier@example.com"
+                />
+            </div>
+        </section>
+
+        <section class="demo-hint">
+            <strong>操作提示：</strong>
+            <ul>
+                <li>列印：選擇 Alpha / Beta × 中/英文版本，新視窗預覽後按「列印」。</li>
+                <li>寄信：填寫收件人後送出，約 0.8 秒後顯示 mock 成功訊息。</li>
+            </ul>
+        </section>
+    </div>
+</main>
