@@ -70,7 +70,7 @@ export class PrintEngineService {
         const origin = window.location.origin;
         const baseHref = getBaseHref(sourceDocument);
         const cssBaseUrl = `${origin}${baseHref}`;
-        this.appendPrintStyles(targetDocument, cssBaseUrl);
+        await this.appendPrintStyles(targetDocument, cssBaseUrl);
 
         const SAFE_MARGIN_MM = 12;
         const FOOTER_GAP_PX = 12;
@@ -314,17 +314,11 @@ export class PrintEngineService {
         }
     }
 
-    private appendPrintStyles(targetDocument: Document, cssBaseUrl: string): void {
+    private async appendPrintStyles(targetDocument: Document, cssBaseUrl: string): Promise<void> {
         try {
-            const printLink = targetDocument.createElement('link');
-            printLink.rel = 'stylesheet';
-            printLink.href = `${cssBaseUrl}print.css`;
-            targetDocument.head.appendChild(printLink);
-
-            const themeLink = targetDocument.createElement('link');
-            themeLink.rel = 'stylesheet';
-            themeLink.href = `${cssBaseUrl}theme.css`;
-            targetDocument.head.appendChild(themeLink);
+            await appendStylesheetLink(targetDocument, `${cssBaseUrl}print.css`);
+            await appendStylesheetLink(targetDocument, `${cssBaseUrl}theme.css`);
+            await delay(80);
         } catch (error) {
             console.warn('append print.css/theme.css failed', error);
         }
@@ -342,6 +336,16 @@ export class PrintEngineService {
 
 const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 const mmToPx = (mm: number): number => (mm / 25.4) * 96;
+
+const appendStylesheetLink = (targetDocument: Document, href: string): Promise<void> =>
+    new Promise(resolve => {
+        const link = targetDocument.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        link.onload = () => resolve();
+        link.onerror = () => resolve();
+        targetDocument.head.appendChild(link);
+    });
 
 const getBaseHref = (doc: Document): string => {
     const baseTag = doc.querySelector('base');

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, inject, input, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, computed, ElementRef, inject, input, OnInit, signal, ViewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { COMPANY_OPTIONS, LANG_OPTIONS, languageType } from '@lib/mail/mail.constants';
 import { MailPreviewService } from '@lib/mail/mail-preview.service';
@@ -101,7 +102,12 @@ export interface MailDialogData {
                             <mat-spinner diameter="18"></mat-spinner>
                         }
                     </div>
-                    <iframe class="preview-frame" [srcdoc]="preview.mailContent()" title="mail-preview"></iframe>
+                    <iframe
+                        #previewFrame
+                        class="preview-frame"
+                        [srcdoc]="safeMailContent()"
+                        title="mail-preview"
+                    ></iframe>
                 </section>
 
                 <section class="section">
@@ -196,6 +202,7 @@ export class MailDialogComponent implements OnInit {
     protected readonly preview = inject(MailPreviewService);
     private readonly mockApi = inject(MockApiService);
     private readonly snackBar = inject(MatSnackBar);
+    private readonly sanitizer = inject(DomSanitizer);
     private readonly dialogRef = inject(MatDialogRef<MailDialogComponent>, { optional: true });
     private readonly dialogData = inject<MailDialogData | null>(MAT_DIALOG_DATA, { optional: true });
 
@@ -206,6 +213,11 @@ export class MailDialogComponent implements OnInit {
     readonly onSend = input<SendEmailFn | undefined>(undefined);
 
     @ViewChild('attachmentInput') attachmentInput?: ElementRef<HTMLInputElement>;
+    @ViewChild('previewFrame') previewFrame?: ElementRef<HTMLIFrameElement>;
+
+    readonly safeMailContent = computed(() =>
+        this.sanitizer.bypassSecurityTrustHtml(this.preview.mailContent())
+    );
 
     readonly langOptions = LANG_OPTIONS;
     readonly companyOptions = COMPANY_OPTIONS;
@@ -303,6 +315,11 @@ export class MailDialogComponent implements OnInit {
         this.dialogRef?.close(false);
     }
 
+    getIframeContent(): string {
+        const doc = this.previewFrame?.nativeElement.contentDocument;
+        return doc?.body?.innerHTML || this.preview.mailContent();
+    }
+
     handleSubmit(): void {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
@@ -318,7 +335,7 @@ export class MailDialogComponent implements OnInit {
             mail_cc: stringToArray(values.mail_cc),
             mail_bcc: stringToArray(values.mail_bcc),
             mail_title: values.mail_title,
-            mail_body: this.preview.mailContent(),
+            mail_body: this.getIframeContent(),
             mail_attachments: values.attachment_id
                 ? [{ attachment_id: values.attachment_id, attachment_name: values.attachment_name || '' }]
                 : [],
