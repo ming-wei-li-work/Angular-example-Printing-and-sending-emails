@@ -8,7 +8,7 @@
 
 push 至 `main` 分支後，GitHub Actions 會自動部署靜態站。
 
-**網址：** `https://<你的 GitHub 使用者名>.github.io/Angular-example-Printing-and-sending-emails/`
+**網址：** [https://ming-wei-li-work.github.io/Angular-example-Printing-and-sending-emails/](https://ming-wei-li-work.github.io/Angular-example-Printing-and-sending-emails/)
 
 ### 首次啟用 GitHub Pages
 
@@ -74,10 +74,6 @@ public/
 npm run build
 # 產出 dist/angular-print-mail-demo/browser
 ```
-
-## 與 React 範例對照
-
-本專案與 [React-example-Printing-and-sending-emails](../React-example-Printing-and-sending-emails) 共用相同的 mock 資料與 mapper 邏輯，UI 改為 Angular Material，列印引擎以 `ComponentRenderService` 動態掛載 Angular 模板元件。
 
 ## 擴充
 
